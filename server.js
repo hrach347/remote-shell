@@ -87,8 +87,7 @@ const server = net.createServer((socket) => {
         }
 
         const { stdout, stderr } = await runCommand(command)
-        socket.write(stdout)
-
+        socket.write(stdout || " ")
         serverLog({ command, socket, stdout, stderr })
 
     });
