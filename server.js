@@ -72,9 +72,12 @@ const server = net.createServer((socket) => {
 
     socket.on("data", async data => {
         const command = data.toString().trim()
+
         if (!command) {
+            socket.write("\n")
             return null
         }
+
         sessions[keyOf(socket)].history.push(command)
 
         if (builtInCommands[command]) {

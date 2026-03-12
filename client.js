@@ -15,7 +15,7 @@ const socket = net.createConnection({ host, port });
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
-    prompt: chalk.bgCyan('root@root:netcat$')
+    prompt: chalk.green('root@root:netcat$') + " "
 });
 
 socket.on("connect", () => {
