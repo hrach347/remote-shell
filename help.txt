@@ -1,0 +1,10 @@
+HELP COMMANDS
+
+help - runs "cat help.txt"
+----------------------------------------------------
+session - shows the current session (whoami) 
+----------------------------------------------------
+history - shows command history for a current session
+----------------------------------------------------
+exit - kills the connection (exits)
+----------------------------------------------------
