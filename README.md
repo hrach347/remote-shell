@@ -1,4 +1,4 @@
-# Remote-Shell 🐚
+# Remote Shell 🐚
 ![Node.js](https://img.shields.io/badge/node-%3E%3D18-green)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![TCP](https://img.shields.io/badge/network-TCP-orange)
