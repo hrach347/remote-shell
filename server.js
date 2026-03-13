@@ -23,10 +23,10 @@ function serverLog({ command, socket, stdout, stderr }) {
     console.log("From: " + keyOf(socket))
     console.log(chalk.bold("Command: " + command))
 
-    console.log(chalk.green("Stdout: "))
-    console.log(chalk.green("-----------------------------"))
+    console.log(chalk.cyan("Stdout: "))
+    console.log(chalk.cyan("-----------------------------"))
     console.log(chalk.yellow(stdout))
-    console.log(chalk.green("-----------------------------"))
+    console.log(chalk.cyan("-----------------------------"))
 
     console.log(chalk.red("Stderr: "))
     console.log(chalk.red("-----------------------------"))
@@ -53,7 +53,7 @@ const builtInCommands = {
     },
     "exit": (socket) => {
         delete sessions[keyOf(socket)];
-        socket.write("Goodbye brother!")
+        socket.write("Goodbye !")
         socket.end()
         return { stdout: "Session closed from " + keyOf(socket) }
     },
@@ -61,6 +61,34 @@ const builtInCommands = {
         const { stdout, stderr } = await runCommand("cat ./help.txt")
         socket.write(stdout)
         return { stdout, stderr }
+    },
+    "info": async (socket) => {
+        const { stdout, stderr } = await runCommand("cat ./info.txt")
+        socket.write(chalk.cyan(stdout))
+        return { stdout, stderr }
+    },
+    "author": (socket) => {
+        const stdout = "https://github.com/hrach347"
+        socket.write(stdout)
+        return { stdout }
+    },
+    "users": async (socket) => {
+        const stdout = JSON.stringify(Object.keys(sessions))
+        socket.write(stdout)
+        return { stdout }
+    },
+    "broadcast": async (socket, options) => {
+        options.shift()
+        const message = "From - " + keyOf(socket) + " \n" + options.join(" ") + "\n"
+        for (let session in sessions) {
+            sessions[session].socket.write(chalk.bgRedBright(message))
+        }
+        return { stdout: "Broadcasted to all active sessions" }
+    },
+    "clearhistory": (socket) => {
+        sessions[keyOf(socket)].history = []
+        socket.write("Cleared!")
+        return { stdout: "Cleared!" }
     }
 }
 
@@ -80,8 +108,8 @@ const server = net.createServer((socket) => {
 
         sessions[keyOf(socket)].history.push(command)
 
-        if (builtInCommands[command]) {
-            const { stdout, stderr } = await builtInCommands[command](socket)
+        if (builtInCommands[command.split(" ")[0]]) {
+            const { stdout, stderr } = await builtInCommands[command.split(" ")[0]](socket, command.split(" "))
             serverLog({ command, socket, stdout, stderr })
             return null
         }
@@ -89,7 +117,6 @@ const server = net.createServer((socket) => {
         const { stdout, stderr } = await runCommand(command)
         socket.write(stdout || " ")
         serverLog({ command, socket, stdout, stderr })
-
     });
 
     socket.on("end", () => {
@@ -104,6 +131,3 @@ const server = net.createServer((socket) => {
 server.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
-
-
-

@@ -2,9 +2,17 @@ HELP COMMANDS
 
 help - runs "cat help.txt"
 ----------------------------------------------------
-session - shows the current session (whoami) 
+session - displays the current session [whoami]
 ----------------------------------------------------
-history - shows command history for a current session
+users - displays the active sessions
+----------------------------------------------------
+broadcast - send message to all active users, [broadcast Hello Everyone]
+----------------------------------------------------
+history - displays command history for a current session
+----------------------------------------------------
+clearhistory - clears history
 ----------------------------------------------------
 exit - kills the connection (exits)
+----------------------------------------------------
+info - information about this project
 ----------------------------------------------------

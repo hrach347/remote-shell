@@ -15,7 +15,7 @@ const socket = net.createConnection({ host, port });
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
-    prompt: chalk.green('root@root:netcat$') + " "
+    prompt: chalk.green('user@user:~$') + " "
 });
 
 socket.on("connect", () => {
@@ -31,9 +31,7 @@ rl.on("line", line => {
 
 socket.on("data", data => {
     const response = data.toString().trim()
-    console.log(chalk.greenBright("-----------------------------------------"))
     console.log(chalk.bold(response))
-    console.log(chalk.greenBright("-----------------------------------------"))
     rl.prompt()
 })
 
