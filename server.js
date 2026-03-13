@@ -1,7 +1,6 @@
 import net from "node:net";
 import chalk from "chalk"
 import { runCommand } from "./helpers.js";
-import { stdout } from "node:process";
 
 const [, , portArg] = process.argv;
 
