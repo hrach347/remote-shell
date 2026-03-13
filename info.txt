@@ -1,0 +1,13 @@
+A multi-session remote shell inspired by Netcat,
+implemented with Node.js.
+
+Features:
+- TCP client/server architecture
+- Multiple concurrent sessions
+- Built-in shell commands
+- Remote command execution
+
+Project: https://github.com/hrach347/remote-shell
+Author: hrach347
+
+ENJOY!
